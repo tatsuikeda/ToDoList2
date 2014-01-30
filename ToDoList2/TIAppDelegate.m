@@ -7,6 +7,7 @@
 //
 
 #import "TIAppDelegate.h"
+#import "TITodoListViewController.h"
 
 @implementation TIAppDelegate
 
@@ -18,6 +19,9 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    TITodoListViewController *viewController = [[TITodoListViewController alloc] initWithStyle:(UITableViewStylePlain)];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
+    self.window.rootViewController = navController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

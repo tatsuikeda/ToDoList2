@@ -19,6 +19,7 @@
     self = [super initWithStyle:style];
     if (self) {
         // Custom initialization
+        self.navigationItem.title = @"Nav Controller Title";
     }
     return self;
 }
