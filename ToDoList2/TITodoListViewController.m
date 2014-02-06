@@ -10,6 +10,8 @@
 
 @interface TITodoListViewController ()
 
+@property (strong, nonatomic) NSMutableArray *todos;
+
 @end
 
 @implementation TITodoListViewController
@@ -20,8 +22,21 @@
     if (self) {
         // Custom initialization
         self.navigationItem.title = @"Nav Controller Title";
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(didTapAddButton)];
+        
+        self.todos = [NSUserDefaults.standardUserDefaults objectForKey:@"todos"];
+        
+        if(!self.todos){
+            self.todos = [NSMutableArray array];
+        }
     }
     return self;
+}
+
+- (void)didTapAddButton {
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New To-Do" message:@"Enter a to-do item" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
+    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [alertView show];
 }
 
 - (void)viewDidLoad
@@ -45,26 +60,55 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return self.todos.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if (!cell)
+    {
+        NSLog(@"Alloc cell");
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    } else {
+        NSLog(@"Reusing cell");
+    }
     
     // Configure the cell...
     
+    NSString *todoItem = [self.todos objectAtIndex:indexPath.row];
+    
+    [[cell textLabel] setText:todoItem];
+    [[cell detailTextLabel] setText:[NSString stringWithFormat:@"indexPath.row = %d",indexPath.row]];
+    
     return cell;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"Title!";
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [self.todos removeObjectAtIndex:indexPath.row];
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:self.todos forKey:@"todos"];
+        [userDefaults synchronize];
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationMiddle];
+    }
+    
 }
 
 /*
@@ -118,4 +162,26 @@
 
  */
 
+#pragma mark - UIAlertViewDelegateProtocol
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == alertView.firstOtherButtonIndex)
+    {
+        NSLog(@"Done button clicked");
+        UITextField *tf = [alertView textFieldAtIndex:0];
+        NSLog(@"%@",tf.text);
+        [self.todos addObject:tf.text];
+        NSLog(@"%@",self.todos);
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        [userDefaults setObject:self.todos forKey:@"todos"];
+        [userDefaults synchronize];
+        
+        [self.tableView reloadData];
+    }
+    if (buttonIndex == alertView.cancelButtonIndex)
+    {
+        NSLog(@"User canceled");
+    }
+}
 @end

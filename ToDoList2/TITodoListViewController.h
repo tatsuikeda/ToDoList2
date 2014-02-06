@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface TITodoListViewController : UITableViewController
+@interface TITodoListViewController : UITableViewController <UIAlertViewDelegate>
 
 @end
