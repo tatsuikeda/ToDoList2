@@ -7,11 +7,9 @@
 //
 
 #import "TITodoListViewController.h"
+//#import "CreateTodoViewController.h"
 
 @interface TITodoListViewController ()
-
-@property (strong, nonatomic) NSMutableArray *todos;
-
 @end
 
 @implementation TITodoListViewController
@@ -32,22 +30,51 @@
     }
     return self;
 }
-
+//old view didtapaddbutton
+//- (void)didTapAddButton {
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New To-Do" message:@"Enter a to-do item" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
+//    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    [alertView show];
+//}
+//new didtapaddbutton
+//- (void)didTapAddButton {
+//    CreateTodoViewController *createVC = [[CreateTodoViewController alloc] init];
+//    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:createVC];
+//    [self.navigationController presentViewController:navController animated:YES completion:nil];
+//}
 - (void)didTapAddButton {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"New To-Do" message:@"Enter a to-do item" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Done", nil];
-    alertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    [alertView show];
+    CreateTodoViewController *createVC = [[CreateTodoViewController alloc] init];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:createVC];
+    createVC.delegate = self;
+    [self.navigationController presentViewController:navController animated:YES completion:nil];
 }
+
+- (void)createTodo:(NSString *)todo withDueDate:(NSDate *)dueDate {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+    // save the todo
+    NSDictionary *item = @{@"text": todo,
+                           @"dueDate": dueDate};
+    [self.todos addObject:item];
+    NSLog(@"%@", self.todos);
+    
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.todos forKey:@"todos"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
+    
+    // refresh the table view
+    [self.tableView reloadData];
+}
+
+- (void)didCancelCreatingNewTodo {
+    [self.navigationController dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,10 +112,11 @@
     
     // Configure the cell...
     
-    NSString *todoItem = [self.todos objectAtIndex:indexPath.row];
+    NSDictionary *todoItem = [self.todos objectAtIndex:indexPath.row];
+    NSString *todoString = [todoItem objectForKey:@"text"];
     
-    [[cell textLabel] setText:todoItem];
-    [[cell detailTextLabel] setText:[NSString stringWithFormat:@"indexPath.row = %d",indexPath.row]];
+    [[cell textLabel] setText:todoString];
+    [[cell detailTextLabel] setText:[NSString stringWithFormat:@"indexPath.row = %ld",(long)indexPath.row]];
     
     return cell;
 }
@@ -184,4 +212,6 @@
         NSLog(@"User canceled");
     }
 }
+
+
 @end

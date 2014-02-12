@@ -23,6 +23,7 @@
 		170E47081898311900E0EB2E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 170E47061898311900E0EB2E /* InfoPlist.strings */; };
 		170E470A1898311900E0EB2E /* ToDoList2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 170E47091898311900E0EB2E /* ToDoList2Tests.m */; };
 		170E47151898329800E0EB2E /* TITodoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 170E47141898329800E0EB2E /* TITodoListViewController.m */; };
+		178F538318AABE5800148FDE /* CreateTodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 178F538218AABE5800148FDE /* CreateTodoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		170E47091898311900E0EB2E /* ToDoList2Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToDoList2Tests.m; sourceTree = "<group>"; };
 		170E47131898329800E0EB2E /* TITodoListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TITodoListViewController.h; sourceTree = "<group>"; };
 		170E47141898329800E0EB2E /* TITodoListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TITodoListViewController.m; sourceTree = "<group>"; };
+		178F538118AABE5800148FDE /* CreateTodoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CreateTodoViewController.h; path = ../CreateTodoViewController.h; sourceTree = "<group>"; };
+		178F538218AABE5800148FDE /* CreateTodoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CreateTodoViewController.m; path = ../CreateTodoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,8 @@
 		170E46E61898311900E0EB2E /* ToDoList2 */ = {
 			isa = PBXGroup;
 			children = (
+				178F538118AABE5800148FDE /* CreateTodoViewController.h */,
+				178F538218AABE5800148FDE /* CreateTodoViewController.m */,
 				170E47131898329800E0EB2E /* TITodoListViewController.h */,
 				170E47141898329800E0EB2E /* TITodoListViewController.m */,
 				170E46EF1898311900E0EB2E /* TIAppDelegate.h */,
@@ -257,6 +262,7 @@
 				170E46ED1898311900E0EB2E /* main.m in Sources */,
 				170E46F11898311900E0EB2E /* TIAppDelegate.m in Sources */,
 				170E46F41898311900E0EB2E /* ToDoList2.xcdatamodeld in Sources */,
+				178F538318AABE5800148FDE /* CreateTodoViewController.m in Sources */,
 				170E47151898329800E0EB2E /* TITodoListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

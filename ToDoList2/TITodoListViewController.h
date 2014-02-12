@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CreateTodoViewController.h"
 
-@interface TITodoListViewController : UITableViewController <UIAlertViewDelegate>
+//@interface TITodoListViewController : UITableViewController <UIAlertViewDelegate>
 
+@interface TITodoListViewController : UITableViewController<UIAlertViewDelegate, CreateTodoViewControllerDelegate>
+@property (nonatomic, strong) NSMutableArray *todos;
 @end
