@@ -114,9 +114,12 @@
     
     NSDictionary *todoItem = [self.todos objectAtIndex:indexPath.row];
     NSString *todoString = [todoItem objectForKey:@"text"];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.dateStyle = NSDateFormatterMediumStyle;
     
     [[cell textLabel] setText:todoString];
-    [[cell detailTextLabel] setText:[NSString stringWithFormat:@"indexPath.row = %ld",(long)indexPath.row]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"Due %@",
+                                 [dateFormatter stringFromDate:todoItem[@"dueDate"]]];
     
     return cell;
 }
